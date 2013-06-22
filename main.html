@@ -1,0 +1,138 @@
+
+<!DOCTYPE html>
+<html lang="ja">
+	<head>
+		<meta charset="UTF-8">
+			<title>nippog</title>
+			<link href="css/bootstrap.min.css" media="screen" rel="stylesheet" type="text/css" />
+			<link href="css/style.css" media="screen" rel="stylesheet" type="text/css" />
+	</head>
+	<body>
+
+		<div class="navbar navbar-inverse navbar-fixed-top">
+			<div class="navbar-inner">
+				<div class="container">
+					<div class="row">
+						<div class="span4">
+							<h1 class="brand" style="font-size:4em">nippog</h1>
+						</div>
+						<div class="pull-right">
+							<button type="button" id="btnPost" class="btn btn-large btn-primary disabled" disabled="disabled">Post</button>
+							<a href="#previewModal" id="btnPreview" class="btn btn-info" data-toggle="modal">Preview</a>
+							<a href="#sourceModal" id="btnViewSource" class="btn btn-info" data-toggle="modal">view source</a>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<div class="container">
+			<!--
+			<div class="row">
+				<div class="span8">
+					<input type="text" class="span8" name="post-url" placeholder="http://nippourl">
+				</div>
+			</div>
+			-->
+
+			<div class="row">
+				<div class="span12">
+					<form class="form-horizontal" id="input-form" method="post" action="/" accept-charset="UTF-8">
+
+						<!-- title -->
+						<div class="row">
+							<div class="span12">
+								<fieldset>
+									<div class="control-group">
+										<label>Nippo Title</label>
+										<input class="span12" name="title" placeholder="20130401日報" type="text">
+									</div>
+									<div class="control-group">
+										<label>Nippo Theme</label>
+										<input class="span12" name="theme" placeholder="OJT　営業部" type="text">
+									</div>
+									<div class="control-group">
+										<label>Nippo Tanto</label>
+										<input class="span12" name="tanto" placeholder="先輩" type="text">
+									</div>
+								</fieldset>
+							</div>
+						</div>
+
+						<!-- chapter -->
+						<div class="row">
+							<div class="span12">
+								<fieldset>
+
+									<!-- chapter title -->
+									<legend>Chapter1</legend>
+									<div class="control-group">
+										<label>title</label>
+										<input class="span12" name="l1t" placeholder="営業同行：Yahoo!様" type="text">
+									</div>
+
+									<!-- sections -->
+									<div id="l1s" class="row">
+										<div class="span4">
+											<div class="control-group">
+												<label>Section1</label>
+												<input class="span4" name="l1m1t" placeholder="目的" type="text">
+											</div>
+											<div class="control-group">
+												<label>Content</label>
+												<textarea class="span4" name="l1m1c"></textarea>
+											</div>
+										</div>
+									</div>
+
+									<!-- add section button -->
+									<div class="row">
+										<div class="span12">
+											<div class="control-group">
+												<button class="btn btnAddSection" type="button" value="1-1">Add section</button>
+											</div>
+										</div>
+									</div>
+
+								</fieldset>
+							</div>
+						</div>
+						<!-- end chapter -->
+
+						<button class="btn btnAddChapter" type="button" value="1">Add Chapter</button>
+					</form>
+				</div>
+			</div>
+
+			<div id="previewModal" class="modal hide fade">
+				<div class="modal-header">
+					<h2>Preview</h2>
+				</div>
+				<div class="modal-body">
+					<div id="preview"></div>
+				</div>
+				<div class="modal-footer">
+					<a href="#" class="btn" data-dismiss="modal">Close</a>
+				</div>
+			</div>
+
+			<div id="sourceModal" class="modal hide fade">
+				<div class="modal-header">
+					<h2>Source</h2>
+				</div>
+				<div class="modal-body">
+					<textarea id="source" class="span6" rows="18" disabled="disabled"></textarea>
+				</div>
+				<div class="modal-footer">
+					<button id="btnHilightSource" type="button" class="btn">Hilight</button>
+					<a href="#" class="btn" data-dismiss="modal">Close</a>
+				</div>
+			</div>
+		</div>
+
+		<script src="js/jquery-1.10.1.min.js" type="text/javascript"></script>
+		<script src="js/jquery.zclip.min.js" type="text/javascript"></script>
+		<script src="js/bootstrap.min.js" type="text/javascript"></script>
+		<script src="js/application.js" type="text/javascript"></script>
+	</body>
+</html>

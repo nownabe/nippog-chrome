@@ -1,0 +1,6 @@
+body {
+	padding-top: 100px;
+}
+body.modal-open {
+	overflow: hidden;
+}
