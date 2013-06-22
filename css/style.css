@@ -4,3 +4,12 @@ body {
 body.modal-open {
 	overflow: hidden;
 }
+button#btnPost {
+	width: 150px;
+}
+#btnPreview,
+#btnViewSource,
+#btnSave,
+#btnRestore {
+	width: 80px;
+}

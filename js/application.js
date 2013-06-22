@@ -3,25 +3,19 @@
 
 $(function(){
 	
-	function itemize(content) {
-		var items = content.split("\n")
-		var text = "<ul>\n"
-		for (var i=0; i<items.length; i++)
-			text += "<li>" + $('<div/>').text(items[i]).html() + "</li>\n"
-		text += "</ul>\n"
-		return text
-	}
-
 	/*
 	 * Add Section Function
 	 */
-
 	$(document).on('click', "button.btnAddSection", function(){
 		var nums = $(this).attr('value').split('-')
 		var lnum = Number(nums[0])
 		var mnum = Number(nums[1])
-		mnum += 1
 		
+		addSection(lnum, mnum)
+	})
+
+	function addSection(lnum, mnum) {
+		mnum++
 		var divname = 'l' + lnum + 's'
 		var tname = 'l' + lnum + 'm' + mnum + 't'
 		var cname = 'l' + lnum + 'm' + mnum + 'c'
@@ -39,17 +33,22 @@ $(function(){
 			</div> \
 		")
 		
-		$(this).attr('value', lnum + '-' + mnum)
-	})
+		$("button#btnRestore").attr("disabled", "disabled")
+		$("button#btnAddSection" + lnum).attr('value', lnum + '-' + mnum)
+	}
 	
 	/*
 	 * Add Chapter Function
 	 */
 	$(document).on('click', "button.btnAddChapter", function(){
 		var num = Number($(this).attr('value'))
-		num += 1
-		
-		$(this).before(" \
+		addChapter(num)
+	})
+
+	function addChapter(num) {
+		num++
+
+		$("button.btnAddChapter").before(" \
 <div class='row'>\
 	<div class='span12'>\
 		<fieldset> \
@@ -75,7 +74,7 @@ $(function(){
       <div class='row'>\
       	<div class='span12'>\
           <div class='control-group'> \
-            <button class='btn btnAddSection' type='button' value='" + num + "-1'>Add section</button> \
+            <button id='btnAddSection" + num + "' class='btn btnAddSection' type='button' value='" + num + "-1'>Add section</button> \
           </div> \
         </div>\
       </div>\
@@ -84,8 +83,10 @@ $(function(){
 </div>\
 		")
 		
-		$(this).attr('value', num)
-	})
+		$("button.btnRestore").attr("disabled", "disabled")
+		$("button.btnAddChapter").attr('value', num)
+	}
+
 
 	/*
 	 * Copy Source
@@ -170,90 +171,48 @@ $(function(){
 
 		return chapters
 	}
-/*
-	$("form#input-form").change(function(){
 
-		// Read inputs
-		var chapters = new Array()
+	function itemize(content) {
+		var items = content.split("\n")
+		var text = "<ul>\n"
+		for (var i=0; i<items.length; i++)
+			text += "<li>" + $('<div/>').text(items[i]).html() + "</li>\n"
+		text += "</ul>\n"
+		return text
+	}
 
-		var lnum = 1
-		while (true) {
-			var lelem = $("input[name=l" + lnum + "t]")
-			if　( lelem.size() == 0 || lelem.val() == "" ) break
-			chapters.push({title: lelem.val(), sections: new Array()})
-
-			var mnum = 1
-			while (true) {
-				var melemt = $("input[name=l" + lnum + "m" + mnum + "t]")
-				if ( melemt.size() == 0 || melemt.val() == "" ) break
-				chapters[lnum-1].sections.push({
-					title: melemt.val(),
-					content: $("textarea[name=l" + lnum + "m" + mnum + "c]").val()
-				})
-				mnum++
-			}
-
-			lnum++
-		}
-
-		// Format
-		var src = ""
-
-		// table of contents
-		src += "<ol>\n"
-		for (var i=0; i<chapters.length; i++)
-			src += "<li>" + chapters[i].title + "</li>\n"
-		src += "</ol>\n\n"
-
-		// contents
-		for (var i=0; i<chapters.length; i++) {
-			src += "<p><strong><u>" + (i+1) + ". " + chapters[i].title + "</u></strong></p>\n"
-
-			for (var j=0; j<chapters[i].sections.length; j++) {
-				src += "<p><u>" + chapters[i].sections[j].title + "</u></p>\n"
-				src += itemize(chapters[i].sections[j].content) + "\n"
-			}
-		}
-
-		$('div#preview').html(src)
-		$('textarea#source').val(src)
-	})
-*/
 	/*
-	 * Post Nippo
+	 * Save
 	 */
-	
-	/*
-	$("button#btnPost").click(function(){
-		//var formWin = window.open($('input[name=post-url]').val(), "formPage")
-		var formWin = window.open("http://intra/sites/skillcompass/freshman2013/Lists/List21/NewForm.aspx", "formPage")
-		//var formWin = window.open("form.html", "formPage")
-		
-		/*
-		var postUrl = "http://intra/sites/skillcompass/freshman2013/Lists/List21/NewForm.aspx"
-		var data = {
-			
-		}
-		* /
-
-		
-		formWin.onload = function() {
-			alert("load!")
-			$(formWin.document).contents().find("input").each(function(){
-				alert("unko")
-				if ($(this).attr('title')=="タイトル") {$(this).val($('input[name=title]').val()); alert("koito")}
-				if ($(this).attr('title')=="研修テーマ") $(this).val($('input[name=theme]').val())
-				if ($(this).attr('title')=="研修担当") $(this).val($('input[name=tanto]').val())
-			})
-			$(formWin.document).contents().find("textarea").each(function(){
-				if ($(this).attr('title')=="研修内容") $(this).val($('div#preview').html())
-			})
-			//$(formWin.document).contents().find("input[title='研修担当']").val($('input[name=tanto]').val())
-			//$(formWin.document).contents().find("textarea").get(0).val($('div#preview').html())
-			//$(formWin.document).contents().find('input[name="title1"]').val("unko")
-		}
-		
+	$("button#btnSave").click(function(){
+		localStorage['nippog-input'] = JSON.stringify(getChapters())
+		alert("OK!")
 	})
-	*/
+
+	/*
+	 * Restore
+	 */
+	$("button#btnRestore").click(function(){
+		if (!localStorage['nippog-input']) {
+			alert("Not Saved")
+			return
+		}
+
+		var chapters = JSON.parse(localStorage['nippog-input'])
+		for (var i=0; i<chapters.length; i++) {
+			if ( i>0 ) addChapter(i)
+			$("input[name=l" + (i+1) + "t]").val(chapters[i].title)
+
+			var sections = chapters[i].sections
+			for (var j=0; j<sections.length; j++) {
+				if ( j>0 ) addSection(i+1, j)
+				$("input[name=l" + (i+1) + "m" + (j+1) + "t]").val(sections[j].title)
+				$("textarea[name=l" + (i+1) + "m" + (j+1) + "c]").val(sections[j].content)
+			}
+		}
+
+		$("button#btnRestore").attr("disabled", "disabled")
+		//localStorage.removeItem('nippog-input')
+	})
 	
 })
