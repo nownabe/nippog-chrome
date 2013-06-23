@@ -212,7 +212,7 @@ $(function(){
 		}
 
 		$("button#btnRestore").attr("disabled", "disabled")
-		//localStorage.removeItem('nippog-input')
+		localStorage.removeItem('nippog-input')
 	})
 	
 })
