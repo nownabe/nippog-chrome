@@ -74,7 +74,7 @@ $(function(){
       <div class='row'>\
       	<div class='span12'>\
           <div class='control-group'> \
-            <button id='btnAddSection" + num + "' class='btn btnAddSection' type='button' value='" + num + "-1'>Add section</button> \
+            <button id='btnAddSection" + num + "' class='btn btnAddSection' type='button' value='" + num + "-1'>Add Section</button> \
           </div> \
         </div>\
       </div>\
